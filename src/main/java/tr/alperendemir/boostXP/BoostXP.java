@@ -8,15 +8,13 @@ import tr.alperendemir.boostXP.managers.ExperienceManager;
 
 public class BoostXP extends JavaPlugin {
 
-    private ExperienceManager experienceManager;
-
     @Override
     public void onEnable() {
-        experienceManager = new ExperienceManager();
+        ExperienceManager experienceManager = new ExperienceManager();
 
         // Register event listeners
         getServer().getPluginManager().registerEvents(new BlockBreakListener(experienceManager), this);
-        getServer().getPluginManager().registerEvents(new BrewingListener(experienceManager, this), this); // Pass the plugin instance
+        getServer().getPluginManager().registerEvents(new BrewingListener(experienceManager), this); // Pass the plugin instance
         getServer().getPluginManager().registerEvents(new PlayerHarvestListener(experienceManager), this);
 
         getLogger().info("BoostXP has been enabled!");

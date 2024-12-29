@@ -17,11 +17,9 @@ import java.util.Optional;
 public class BrewingListener implements Listener {
 
     private final ExperienceManager experienceManager;
-    private final JavaPlugin plugin;
 
-    public BrewingListener(ExperienceManager experienceManager, JavaPlugin plugin) {
+    public BrewingListener(ExperienceManager experienceManager) {
         this.experienceManager = experienceManager;
-        this.plugin = plugin;
     }
 
     @EventHandler
@@ -29,15 +27,11 @@ public class BrewingListener implements Listener {
         Block block = event.getBlock();
         BrewingStand brewingStand = (BrewingStand) block.getState();
 
-        // Debug: Log that the event was triggered
-        plugin.getLogger().info("BrewEvent triggered at " + block.getLocation());
-
         // Get the inventory of the brewing stand
         BrewerInventory inventory = brewingStand.getInventory();
 
         // Check if the brewing process is complete
         if (inventory.getContents().length == 0) {
-            plugin.getLogger().info("Brewing stand is empty. Skipping XP reward.");
             return; // No items in the brewing stand
         }
 
@@ -46,9 +40,6 @@ public class BrewingListener implements Listener {
                 .filter(player -> player.getLocation().distanceSquared(block.getLocation()) <= 100) // Within 10 blocks
                 .toList();
 
-        // Debug: Log nearby players
-        plugin.getLogger().info("Nearby players: " + nearbyPlayers.size());
-
         if (!nearbyPlayers.isEmpty()) {
             // Find the closest player
             Optional<Player> closestPlayer = nearbyPlayers.stream()
@@ -56,9 +47,6 @@ public class BrewingListener implements Listener {
 
             Player brewer = closestPlayer.get();
             experienceManager.giveExperience(brewer, 5);
-            plugin.getLogger().info("Gave 5 XP to player: " + brewer.getName());
-        } else {
-            plugin.getLogger().info("No nearby players found.");
         }
     }
 }
