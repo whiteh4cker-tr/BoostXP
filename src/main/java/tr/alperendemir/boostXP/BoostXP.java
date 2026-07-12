@@ -10,12 +10,18 @@ public class BoostXP extends JavaPlugin {
 
     @Override
     public void onEnable() {
+        saveDefaultConfig();
+
+        int logXp = getConfig().getInt("experience.log-breaking", 1);
+        int brewingXp = getConfig().getInt("experience.brewing", 5);
+        int cropXp = getConfig().getInt("experience.crop-harvesting", 2);
+
         ExperienceManager experienceManager = new ExperienceManager();
 
         // Register event listeners
-        getServer().getPluginManager().registerEvents(new BlockBreakListener(experienceManager), this);
-        getServer().getPluginManager().registerEvents(new BrewingListener(experienceManager), this); // Pass the plugin instance
-        getServer().getPluginManager().registerEvents(new PlayerHarvestListener(experienceManager), this);
+        getServer().getPluginManager().registerEvents(new BlockBreakListener(experienceManager, logXp), this);
+        getServer().getPluginManager().registerEvents(new BrewingListener(experienceManager, brewingXp), this);
+        getServer().getPluginManager().registerEvents(new PlayerHarvestListener(experienceManager, cropXp), this);
 
         getLogger().info("BoostXP has been enabled!");
     }

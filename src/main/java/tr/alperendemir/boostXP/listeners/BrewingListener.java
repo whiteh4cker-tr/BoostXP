@@ -7,7 +7,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.BrewEvent;
 import org.bukkit.inventory.BrewerInventory;
-import org.bukkit.plugin.java.JavaPlugin;
 import tr.alperendemir.boostXP.managers.ExperienceManager;
 
 import java.util.Comparator;
@@ -17,9 +16,11 @@ import java.util.Optional;
 public class BrewingListener implements Listener {
 
     private final ExperienceManager experienceManager;
+    private final int xpAmount;
 
-    public BrewingListener(ExperienceManager experienceManager) {
+    public BrewingListener(ExperienceManager experienceManager, int xpAmount) {
         this.experienceManager = experienceManager;
+        this.xpAmount = xpAmount;
     }
 
     @EventHandler
@@ -46,7 +47,7 @@ public class BrewingListener implements Listener {
                     .min(Comparator.comparingDouble(player -> player.getLocation().distanceSquared(block.getLocation())));
 
             Player brewer = closestPlayer.get();
-            experienceManager.giveExperience(brewer, 5);
+            experienceManager.giveExperience(brewer, xpAmount);
         }
     }
 }

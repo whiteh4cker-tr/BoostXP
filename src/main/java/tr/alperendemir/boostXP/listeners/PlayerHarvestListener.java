@@ -15,13 +15,15 @@ import java.util.List;
 public class PlayerHarvestListener implements Listener {
 
     private final ExperienceManager experienceManager;
+    private final int xpAmount;
     private final List<Material> cropTypes = Arrays.asList(
             Material.WHEAT, Material.CARROTS, Material.POTATOES,
             Material.BEETROOTS, Material.NETHER_WART
     );
 
-    public PlayerHarvestListener(ExperienceManager experienceManager) {
+    public PlayerHarvestListener(ExperienceManager experienceManager, int xpAmount) {
         this.experienceManager = experienceManager;
+        this.xpAmount = xpAmount;
     }
 
     @EventHandler
@@ -33,7 +35,7 @@ public class PlayerHarvestListener implements Listener {
             if (block.getBlockData() instanceof Ageable) {
                 Ageable ageable = (Ageable) block.getBlockData();
                 if (ageable.getAge() == ageable.getMaximumAge()) {
-                    experienceManager.giveExperience(player, 2); // Give 2 XP per fully grown crop
+                    experienceManager.giveExperience(player, xpAmount);
                 }
             }
         }

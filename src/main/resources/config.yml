@@ -1,0 +1,7 @@
+experience:
+  # XP given when breaking a log
+  log-breaking: 1
+  # XP given when brewing completes
+  brewing: 5
+  # XP given when harvesting a fully grown crop
+  crop-harvesting: 2
