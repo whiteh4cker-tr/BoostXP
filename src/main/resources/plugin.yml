@@ -1,4 +1,4 @@
 name: BoostXP
 version: '${version}'
 main: tr.alperendemir.boostXP.BoostXP
-api-version: '26.2'
+api-version: '26.3'
